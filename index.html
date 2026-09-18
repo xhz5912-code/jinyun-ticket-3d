@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="icon" href="data:," />
+    <title>晋韵雅集 · 古风交互票根</title>
+    <script type="module" crossorigin src="./assets/index-EPZj0k7K.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CVhm1qM3.css">
+  </head>
+  <body>
+    <!-- 背景层：玄色渐变 + 宣纸噪点 -->
+    <div id="bg-layer"></div>
+
+    <!-- WebGL 画布层 -->
+    <canvas id="gl-canvas"></canvas>
+
+    <!-- 卷轴层 -->
+    <div id="scroll-layer" class="hidden">
+      <div id="scroll-mask"></div>
+      <div id="scroll-panel">
+        <div class="scroll-rod top"></div>
+        <div class="scroll-body">
+          <button id="scroll-close" title="收起">收起</button>
+          <div class="seal">非遗</div>
+          <h2 id="scroll-title"></h2>
+          <div id="scroll-subtitle"></div>
+          <div id="scroll-content"></div>
+          <div id="scroll-echo"></div>
+        </div>
+        <div class="scroll-rod bottom"></div>
+      </div>
+    </div>
+
+    <!-- 热点提示标签 -->
+    <div id="hotspot-tip" class="hidden"></div>
+
+    <!-- HUD 层 -->
+    <div id="hud">
+      <div>晋韵雅集 · 古风交互票根</div>
+      <div id="hud-fps">FPS --</div>
+      <div id="hud-input">输入 --</div>
+      <div id="hud-transition">转场 待机</div>
+      <div id="hud-particles">粒子 --</div>
+      <div class="hud-hint">H 隐藏 · 1/2/3 故事 · 空格 烟花 · Esc 收起</div>
+    </div>
+
+    <!-- 启动提示层 -->
+    <div id="boot-layer">
+      <div class="boot-inner">
+        <div class="boot-seal">晋</div>
+        <h1>晋韵雅集</h1>
+        <div class="boot-sub">一方古戏台 · 千年晋韵长</div>
+        <ul class="boot-ops">
+          <li>拖拽 —— 旋转票根</li>
+          <li>滚轮 / 双指 —— 缩放</li>
+          <li>点击 戏台 · 月琴 · 快板 —— 聆听非遗故事</li>
+        </ul>
+        <div class="boot-enter">点击任意处入席</div>
+      </div>
+    </div>
+
+  </body>
+</html>
