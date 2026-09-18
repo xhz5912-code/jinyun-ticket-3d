@@ -253,6 +253,7 @@ html, body {
   justify-content: center;
   background: radial-gradient(ellipse at center, rgba(31, 24, 16, 0.88) 0%, rgba(12, 10, 7, 0.96) 100%);
   cursor: pointer;
+  touch-action: none;
   transition: opacity 0.7s ease;
 }
 #boot-layer.hidden { opacity: 0; pointer-events: none; }

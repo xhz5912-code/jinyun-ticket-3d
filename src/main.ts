@@ -12,8 +12,37 @@ const isMobile =
   window.matchMedia('(pointer: coarse)').matches ||
   Math.min(window.innerWidth, window.innerHeight) < 720;
 
+// ---- 启动层：最先注册关闭逻辑，保证后续任何初始化异常时仍可点击关闭 ----
+// 多事件冗余：pointerdown 为主，click / touchend 兜底（部分移动端浏览器触摸链路有差异）
+const boot = document.getElementById('boot-layer')!;
+const hideBoot = () => boot.classList.add('hidden');
+boot.addEventListener('pointerdown', hideBoot);
+boot.addEventListener('click', hideBoot);
+boot.addEventListener('touchend', hideBoot, { passive: true });
+
+// 初始化异常时把原因显示在启动层上，便于真机排查
+window.addEventListener('error', (e) => {
+  if (boot.classList.contains('hidden')) return;
+  const sub = boot.querySelector('.boot-sub');
+  if (sub) sub.textContent = `加载异常：${e.message || '未知错误'}`;
+});
+
 const canvas = document.getElementById('gl-canvas') as HTMLCanvasElement;
-const stage = new Stage(canvas);
+
+let stage: Stage;
+try {
+  stage = new Stage(canvas);
+} catch (err) {
+  // WebGL 不可用（部分旧机型/浏览器）：启动层给出明确提示并锁定，不静默卡死
+  boot.removeEventListener('pointerdown', hideBoot);
+  boot.removeEventListener('click', hideBoot);
+  boot.removeEventListener('touchend', hideBoot);
+  const sub = boot.querySelector('.boot-sub');
+  if (sub) sub.textContent = '当前浏览器不支持 WebGL，无法进入雅集';
+  boot.querySelector('.boot-enter')?.remove();
+  throw err;
+}
+
 const hud = new Hud();
 const scroll = new ScrollPanel();
 const clouds = new Clouds();
@@ -189,10 +218,6 @@ window.addEventListener('keydown', (e) => {
     triggerFireworks();
   }
 });
-
-// ---- 启动层 ----
-const boot = document.getElementById('boot-layer')!;
-boot.addEventListener('pointerdown', () => boot.classList.add('hidden'), { once: true });
 
 // ---- 加载贴图并启动 ----
 const loader = new THREE.TextureLoader();
