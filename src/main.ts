@@ -44,7 +44,7 @@ try {
 }
 
 const hud = new Hud();
-const scroll = new ScrollPanel();
+const scroll = new ScrollPanel((open) => hud.setAutoHidden(open));
 const clouds = new Clouds();
 stage.scene.add(clouds.group);
 

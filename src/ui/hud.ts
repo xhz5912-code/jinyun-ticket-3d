@@ -8,7 +8,8 @@ export class Hud {
   private frames = 0;
   private acc = 0;
   private fps = 0;
-  private visible = true;
+  private userVisible = true; // H 键控制的用户显隐状态
+  private autoHidden = false; // 卷轴打开时的自动隐藏（优先于用户状态）
 
   constructor() {
     this.root = document.getElementById('hud')!;
@@ -31,8 +32,18 @@ export class Hud {
   }
 
   toggle() {
-    this.visible = !this.visible;
-    this.root.classList.toggle('hidden', !this.visible);
+    this.userVisible = !this.userVisible;
+    this.apply();
+  }
+
+  /** 卷轴打开/收起时调用；自动隐藏期间保留 H 键状态，收起后按原状态恢复 */
+  setAutoHidden(hidden: boolean) {
+    this.autoHidden = hidden;
+    this.apply();
+  }
+
+  private apply() {
+    this.root.classList.toggle('hidden', !this.userVisible || this.autoHidden);
   }
 
   update(dt: number) {

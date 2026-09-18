@@ -44,7 +44,7 @@ export class ScrollPanel {
   private open = false;
   private closing = false;
 
-  constructor() {
+  constructor(private readonly onOpenChange?: (open: boolean) => void) {
     this.layer = document.getElementById('scroll-layer')!;
     this.panel = document.getElementById('scroll-panel')!;
     this.mask = document.getElementById('scroll-mask')!;
@@ -77,6 +77,7 @@ export class ScrollPanel {
     void this.panel.offsetWidth;
     this.panel.style.animation = '';
     this.open = true;
+    this.onOpenChange?.(true);
   }
 
   close() {
@@ -90,6 +91,7 @@ export class ScrollPanel {
         this.panel.classList.remove('closing');
         this.closing = false;
         this.open = false;
+        this.onOpenChange?.(false);
       },
       { once: true },
     );

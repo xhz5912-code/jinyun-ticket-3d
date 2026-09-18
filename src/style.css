@@ -307,9 +307,19 @@ html, body {
   50% { opacity: 1; }
 }
 
+/* 小屏 / 触摸设备：HUD 移到左下角并缩小，避免遮挡卷轴与票面 */
+@media (max-width: 720px), (pointer: coarse) {
+  #hud {
+    top: auto;
+    bottom: 14px;
+    font-size: 11px;
+    line-height: 1.6;
+    padding: 6px 9px;
+  }
+}
+
 @media (max-width: 640px) {
   #boot-layer h1 { font-size: 32px; }
   .scroll-body { padding: 26px 22px 22px; }
   #scroll-title { font-size: 21px; }
-  #hud { font-size: 11px; padding: 6px 9px; }
 }
